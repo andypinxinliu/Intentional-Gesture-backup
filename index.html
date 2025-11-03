@@ -1,0 +1,820 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="description"
+        content="Video Analysis">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title></title>
+
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-PYVRSFMDRL"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+
+    gtag('js', new Date());
+
+    gtag('config', 'G-PYVRSFMDRL');
+  </script>
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
+        rel="stylesheet">
+
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+  <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+  <link rel="icon" href="./static/images/favicon.svg">
+  
+  <style>
+    /* Custom styles for Bulma carousel */
+    .carousel {
+      background: transparent;
+    }
+    
+    .video {
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    
+    .subtitle.is-6 {
+      margin-bottom: 1rem;
+      font-weight: 600;
+    }
+    
+    /* Ensure proper spacing between sections */
+    .hero.is-small {
+      padding: 3rem 0;
+    }
+    
+    /* Constrain content width for better readability */
+    .container.is-max-desktop {
+      max-width: 1000px;
+    }
+    
+    /* Make carousels more compact */
+    .carousel-inner {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    
+    /* Adjust video sizes for better fit */
+    .video {
+      max-width: 100%;
+      height: 250px;
+    }
+    
+    /* Make columns more compact in carousels */
+    .carousel-item .columns {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    
+    /* Only apply to ablation carousel */
+    #ablation-carousel .item .content {
+      display: block !important;
+      visibility: visible !important;
+      opacity: 1 !important;
+      position: relative !important;
+      z-index: 10 !important;
+    }
+    
+    #ablation-carousel .item {
+      min-height: auto !important;
+      padding-bottom: 20px !important;
+    }
+  </style>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+  <script src="./static/js/bulma-carousel.min.js"></script>
+  <script src="./static/js/bulma-slider.min.js"></script>
+  <script src="./static/js/index.js"></script>
+  
+  <script>
+    // Disable auto-cycling for carousels to give users control
+    document.addEventListener('DOMContentLoaded', function() {
+      // Find all carousels and disable auto-cycling
+      const carousels = document.querySelectorAll('.carousel');
+      carousels.forEach(function(carousel) {
+        // Set interval to 0 to disable auto-cycling
+        if (carousel.bulmaCarousel) {
+          carousel.bulmaCarousel.settings.interval = 0;
+        }
+      });
+      
+    });
+  </script>
+</head>
+<body>
+
+<nav class="navbar" role="navigation" aria-label="main navigation">
+  <div class="navbar-brand">
+    <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+    </a>
+  </div>
+  <div class="navbar-menu">
+    <div class="navbar-start" style="flex-grow: 1; justify-content: center;">
+      <a class="navbar-item" href="#method">Method</a>
+      <a class="navbar-item" href="#results">Results</a>
+      <a class="navbar-item" href="#ablation">Ablation</a>
+      <a class="navbar-item" href="#comparison">Comparison</a>
+      <a class="navbar-item" href="#rendering">Rendering</a>
+      <a class="navbar-item" href="#dataset">Dataset</a>
+    </div>
+  </div>
+</nav>
+
+
+<section class="hero">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column has-text-centered">
+          <h1 class="title is-1 publication-title">Intentional Gesture: Deliver your Intentions with Gestures for Speech</h1>
+          <div class="is-size-5 publication-authors">
+            <span class="author-block">
+              
+            </span>
+          </div>
+
+
+          <div class="column has-text-centered">
+            <div class="publication-links">
+              <span class="link-block">
+                <a href="./ing-supp.pdf"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="ai ai-arxiv"></i>
+                  </span>
+                  <span>Appx.</span>
+                </a>
+              </span>
+              <!-- Code Link. -->
+              <span class="link-block">
+                <a href="./code"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fab fa-github"></i>
+                  </span>
+                  <span>Code</span>
+                  </a>
+              </span>
+
+
+            </div>
+          </div>
+
+          
+
+    </div>
+  </div>
+</section>
+
+
+<section class="hero teaser">
+  <div class="container is-max-desktop">
+    <div class="hero-body">
+        <img src="./static/images/intention-teaser.png"/>
+      <p>
+        We present <b>Intentioanl Gesture</b>, a novel framework for intention-controllable gesture generation. Our method models latent communicative functions from speech and grounds motion generation in these inferred intentions.
+      </p>
+    </div>
+  </div>
+</section>
+
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <!-- Abstract. -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Abstract</h2>
+        <div class="content has-text-justified">
+          <p>
+            When humans speak, gestures help convey communicative intentions, such as adding emphasis or describing concepts. However, current co-speech gesture generation methods rely solely on superficial linguistic cues (e.g. speech audio or text transcripts), neglecting to understand and leverage the communicative intention that underpins human gestures. This results in outputs that are rhythmically synchronized with speech but are semantically shallow. To address this gap, we introduce <b>Intentional-Gesture</b>, a novel framework that casts gesture generation as an intention-reasoning task grounded in high-level communicative functions. First, we curate the <b>InG</b> dataset by augmenting BEAT-2 with gesture-intention annotations (i.e., text sentences summarizing intentions), which are automatically annotated using large vision-language models. Next, we introduce the <b>Intentional Gesture Motion Tokenizer</b> to leverage these intention annotations. It injects high-level communicative functions (e.g., intentions) into tokenized motion representations to enable intention-aware gesture synthesis. Our framework offers a modular foundation for expressive gesture generation in digital humans and embodied AI.
+          </p>
+        </div>
+      </div>
+    </div>
+    <!--/ Abstract. -->
+  </div>
+</section>
+
+
+<section class="hero teaser" id="method">
+  <div class="container is-max-desktop">
+    <h2 class="title is-3" style="text-align: center;">Method</h2>
+    <div class="content has-text-centered">
+        <img src="./static/images/intention-pipeline.png"/>
+      <p>Left: AuMoCLIP learns a hierarchical joint embedding of motion, audio, and intention. Transcript embeddings (BERT) aligned via CTC serve as queries in a cross-attention module with intention embeddings as keys/values. The resulting semantic features are concatenated with wav2vec2 audio features for contrastive learning. Right: Motion is quantized via a multi-codebook VQ module and supervised by semantic features from AuMoCLIP, enabling expressive and controllable gesture generation.</p>
+        
+    </div>
+  </div>
+</section>
+
+
+
+
+
+
+
+
+<!-- Video carousel -->
+<section class="hero is-small" id="results">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <h2 class="title is-3 has-text-centered">Video Results</h2>
+      <p class="content has-text-centered">
+        Intentional Gesture can generate various gestures based on the speech audio and intention, showcasing its potential for various applications in the development of digital humans and embodied agents.
+      </p>
+
+      <div class="content">
+        <div class="columns is-centered">
+          <div class="column is-one-quarter has-text-centered">
+            <h6 class="subtitle is-6 has-text-grey">Example 1</h6>
+            <video controls class="video" style="width: 100%; height: 250px;">
+              <source src="./static/videos/examples/result_2_scott_0_3_3.mp4" type="video/mp4">
+              Your browser does not support the video tag.
+            </video>
+          </div>
+          
+          <div class="column is-one-quarter has-text-centered">
+            <h6 class="subtitle is-6 has-text-grey">Example 2</h6>
+            <video controls class="video" style="width: 100%; height: 250px;">
+              <source src="./static/videos/examples/result_2_scott_0_4_4.mp4" type="video/mp4">
+              Your browser does not support the video tag.
+            </video>
+          </div>
+          
+          <div class="column is-one-quarter has-text-centered">
+            <h6 class="subtitle is-6 has-text-grey">Example 3</h6>
+            <video controls class="video" style="width: 100%; height: 250px;">
+              <source src="./static/videos/examples/result_2_scott_0_5_5.mp4" type="video/mp4">
+              Your browser does not support the video tag.
+            </video>
+          </div>
+          
+          <div class="column is-one-quarter has-text-centered">
+            <h6 class="subtitle is-6 has-text-grey">Example 4</h6>
+            <video controls class="video" style="width: 100%; height: 250px;">
+              <source src="./static/videos/examples/result_2_scott_0_6_6.mp4" type="video/mp4">
+              Your browser does not support the video tag.
+            </video>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- End video carousel -->
+
+
+<!-- Main Comparison Section -->
+<section class="hero is-small" id="comparison">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <h2 class="title is-3 has-text-centered">Comparison with SOTA Methods</h2>
+      <p class="content has-text-centered">
+        Our results are shown on the left, and the results of compared methods are shown on the right.
+      </p>
+
+      <div class="content">
+        <div id="comparison-carousel" class="carousel results-carousel">
+
+
+
+          <div class="item">
+            <div class="columns is-centered">
+              <div class="column is-half has-text-centered">
+                <h6 class="subtitle is-6 has-text-grey">Intentional Gesture</h6>
+                <video controls class="video" style="width: 100%; height: 250px;">
+                  <source src="./static/videos/comparison/ing_4.mp4" type="video/mp4">
+                  Your browser does not support the video tag.
+                </video>
+              </div>
+              <div class="column is-half has-text-centered">
+                <h6 class="subtitle is-6 has-text-grey">GestureLSM</h6>
+                <video controls class="video" style="width: 100%; height: 250px;">
+                  <source src="./static/videos/comparison/lsm_4.mp4" type="video/mp4">
+                  Your browser does not support the video tag.
+                </video>
+              </div>
+            </div>
+          </div>
+          
+          
+          <div class="item">
+            <div class="columns is-centered">
+              <div class="column is-half has-text-centered">
+                <h6 class="subtitle is-6 has-text-grey">Intentional Gesture</h6>
+                <video controls class="video" style="width: 100%; height: 250px;">
+                  <source src="./static/videos/comparison/ing_0.mp4" type="video/mp4">
+                  Your browser does not support the video tag.
+                </video>
+              </div>
+              <div class="column is-half has-text-centered">
+                <h6 class="subtitle is-6 has-text-grey">GestureLSM</h6>
+                <video controls class="video" style="width: 100%; height: 250px;">
+                  <source src="./static/videos/comparison/lsm_0.mp4" type="video/mp4">
+                  Your browser does not support the video tag.
+                </video>
+              </div>
+            </div>
+          </div>
+          
+          <div class="item">
+            <div class="columns is-centered">
+              <div class="column is-half has-text-centered">
+                <h6 class="subtitle is-6 has-text-grey">Intentional Gesture</h6>
+                <video controls class="video" style="width: 100%; height: 250px;">
+                  <source src="./static/videos/comparison/ing_1.mp4" type="video/mp4">
+                  Your browser does not support the video tag.
+                </video>
+              </div>
+              <div class="column is-half has-text-centered">
+                <h6 class="subtitle is-6 has-text-grey">EMAGE</h6>
+                <video controls class="video" style="width: 100%; height: 250px;">
+                  <source src="./static/videos/comparison/emage_1.mp4" type="video/mp4">
+                  Your browser does not support the video tag.
+                </video>
+              </div>
+            </div>
+          </div>
+
+
+          <div class="item">
+            <div class="columns is-centered">
+              <div class="column is-half has-text-centered">
+                <h6 class="subtitle is-6 has-text-grey">Intentional Gesture</h6>
+                <video controls class="video" style="width: 100%; height: 250px;">
+                  <source src="./static/videos/comparison/ing_5.mp4" type="video/mp4">
+                  Your browser does not support the video tag.
+                </video>
+              </div>
+              <div class="column is-half has-text-centered">
+                <h6 class="subtitle is-6 has-text-grey">EMAGE</h6>
+                <video controls class="video" style="width: 100%; height: 250px;">
+                  <source src="./static/videos/comparison/emage_5.mp4" type="video/mp4">
+                  Your browser does not support the video tag.
+                </video>
+              </div>
+            </div>
+          </div>
+          
+          <div class="item">
+            <div class="columns is-centered">
+              <div class="column is-half has-text-centered">
+                <h6 class="subtitle is-6 has-text-grey">Intentional Gesture</h6>
+                <video controls class="video" style="width: 100%; height: 250px;">
+                  <source src="./static/videos/comparison/ing_3.mp4" type="video/mp4">
+                  Your browser does not support the video tag.
+                </video>
+              </div>
+              <div class="column is-half has-text-centered">
+                <h6 class="subtitle is-6 has-text-grey">CAMN</h6>
+                <video controls class="video" style="width: 100%; height: 250px;">
+                  <source src="./static/videos/comparison/camn_3.mp4" type="video/mp4">
+                  Your browser does not support the video tag.
+                </video>
+              </div>
+            </div>
+          </div>
+
+
+          <div class="item">
+            <div class="columns is-centered">
+              <div class="column is-half has-text-centered">
+                <h6 class="subtitle is-6 has-text-grey">Intentional Gesture</h6>
+                <video controls class="video" style="width: 100%; height: 250px;">
+                  <source src="./static/videos/comparison/ing_6.mp4" type="video/mp4">
+                  Your browser does not support the video tag.
+                </video>
+              </div>
+              <div class="column is-half has-text-centered">
+                <h6 class="subtitle is-6 has-text-grey">CAMN</h6>
+                <video controls class="video" style="width: 100%; height: 250px;">
+                  <source src="./static/videos/comparison/camn_6.mp4" type="video/mp4">
+                  Your browser does not support the video tag.
+                </video>
+              </div>
+            </div>
+          </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Realistic Video Rendering Section -->
+<section class="hero is-small" id="rendering">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <h2 class="title is-3 has-text-centered">Realistic Video Rendering</h2>
+      <p class="content has-text-centered">
+        Photorealistic video generation based on audio2photoreal rendering pipeline.
+      </p>
+
+      <div class="content">
+        <div class="columns is-centered">
+          <div class="column is-half has-text-centered">
+            <h6 class="subtitle is-6 has-text-grey">Photorealistic Rendering 1</h6>
+            <video controls class="video" style="width: 100%; height: 300px;">
+              <source src="./static/videos/a2p/real0.mp4" type="video/mp4">
+              Your browser does not support the video tag.
+            </video>
+          </div>
+          
+          <div class="column is-half has-text-centered">
+            <h6 class="subtitle is-6 has-text-grey">Photorealistic Rendering 2</h6>
+            <video controls class="video" style="width: 100%; height: 300px;">
+              <source src="./static/videos/a2p/real1.mp4" type="video/mp4">
+              Your browser does not support the video tag.
+            </video>
+          </div>
+
+          <div class="column is-half has-text-centered">
+            <h6 class="subtitle is-6 has-text-grey">Photorealistic Rendering 3</h6>
+            <video controls class="video" style="width: 100%; height: 300px;">
+              <source src="./static/videos/a2p/real2.mp4" type="video/mp4">
+              Your browser does not support the video tag.
+            </video>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- Ablation Study Section -->
+<section class="hero is-small" id="ablation">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <h2 class="title is-3 has-text-centered">Ablation Study</h2>
+      <p class="content has-text-centered">
+        Ablation Study Comparison: Full version results are shown on the left, and the ablated results are shown on the right.
+      </p>
+
+      <div class="content">
+        <div id="ablation-carousel" class="carousel results-carousel">
+          <div class="item">
+            <div class="content has-text-centered" style="margin-bottom: 20px; padding: 20px; background-color: #e8f4f8; border: 2px solid #3273dc; border-radius: 8px;">
+              <p style="color: #363636; font-weight: 500; font-size: 16px;">Replace Intentions with Motion Description: When we replace the intention annotations with motion descriptions, the model loses the high-level communicative context, resulting in less semantically meaningful gestures that are more focused on physical movement rather than communicative intent.</p>
+            </div>
+            <div class="columns is-centered">
+              <div class="column is-half has-text-centered">
+                <h6 class="subtitle is-6 has-text-grey">Full Version</h6>
+                <video controls class="video" style="width: 100%; height: 250px;">
+                  <source src="./static/videos/ablation/ab_ing_0.mp4" type="video/mp4">
+                  Your browser does not support the video tag.
+                </video>
+              </div>
+              <div class="column is-half has-text-centered">
+                <h6 class="subtitle is-6 has-text-grey">Replace Intentions with Motion Description</h6>
+                <video controls class="video" style="width: 100%; height: 250px;">
+                  <source src="./static/videos/ablation/ab_ing_w_motion.mp4" type="video/mp4">
+                  Your browser does not support the video tag.
+                </video>
+              </div>
+            </div>
+          </div>
+          
+          <div class="item">
+            <div class="content has-text-centered" style="margin-bottom: 20px; padding: 20px; background-color: #e8f4f8; border: 2px solid #3273dc; border-radius: 8px;">
+              <p style="color: #363636; font-weight: 500; font-size: 16px;">Semantic Suerpvision for the tokenizer helps to capture the emotional context from the speech and repsent the corresponding larger motion patterns to highlight some strong emotions.</p>
+            </div>
+            <div class="columns is-centered">
+              <div class="column is-half has-text-centered">
+                <h6 class="subtitle is-6 has-text-grey">Full Version</h6>
+                <video controls class="video" style="width: 100%; height: 250px;">
+                  <source src="./static/videos/ablation/ab_ing_1.mp4" type="video/mp4">
+                  Your browser does not support the video tag.
+                </video>
+              </div>
+              <div class="column is-half has-text-centered">
+                <h6 class="subtitle is-6 has-text-grey">W/O Semantic Supervision</h6>
+                <video controls class="video" style="width: 100%; height: 250px;">
+                  <source src="./static/videos/ablation/ab_ing_wo_semantic_supervision.mp4" type="video/mp4">
+                  Your browser does not support the video tag.
+                </video>
+              </div>
+            </div>
+          </div>
+          
+          <div class="item">
+            <div class="content has-text-centered" style="margin-bottom: 20px; padding: 20px; background-color: #e8f4f8; border: 2px solid #3273dc; border-radius: 8px;">
+              <p style="color: #363636; font-weight: 500; font-size: 16px;">Without Intention as Input, the model only relies on the audio beats, though most of the gestures follows the rhythms, the motion is not semantically meaningful and always looks redundent and unnatural.</p>
+            </div>
+            <div class="columns is-centered">
+              <div class="column is-half has-text-centered">
+                <h6 class="subtitle is-6 has-text-grey">Full Version</h6>
+                <video controls class="video" style="width: 100%; height: 250px;">
+                  <source src="./static/videos/ablation/ab_ing_2.mp4" type="video/mp4">
+                  Your browser does not support the video tag.
+                </video>
+              </div>
+              <div class="column is-half has-text-centered">
+                <h6 class="subtitle is-6 has-text-grey">W/O Intention as Input</h6>
+                <video controls class="video" style="width: 100%; height: 250px;">
+                  <source src="./static/videos/ablation/ab_wo_intention_as_input.mp4" type="video/mp4">
+                  Your browser does not support the video tag.
+                </video>
+              </div>
+            </div>
+          </div>
+          
+
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="dataset">
+  <div class="container is-max-desktop content">
+    <h2 class="title is-3 has-text-centered">Dataset Information</h2>
+    <p class="content has-text-centered">Information about the dataset used in this research.</p>
+<div class="columns">
+  <div class="column is-two-thirds">
+    <h4 class="subtitle is-5">Basic Information</h4>
+    <ul>
+      <li>Built on top of <strong>BEAT-2</strong> and <strong>Audio2Photoreal</strong>, high-quality co-speech gesture corpus, and augmented with <strong>Intention-Grounded (InG)</strong> annotations (communicative functions + intention summaries).</li>
+      <li>Each utterance is paired with <strong>motion-grounded descriptors</strong> (keyframes + rule-based movement summaries) and <strong>intention text</strong> derived via a structured VLM prompting protocol with human filtering.</li>
+      <li>Modalities include <strong>audio</strong>, <strong>time-aligned transcripts</strong>, <strong>3D body motion</strong> (SMPL joints &amp; hands), and <strong>intention/function labels</strong>.</li>
+      <li>Annotations target pragmatic functions (e.g., <em>Emphasis</em>, <em>Deixis</em>, <em>Negation</em>, <em>Mental State</em>, <em>Process</em>) to enable intention-controllable gesture generation.</li>
+    </ul>
+  </div>
+  <div class="column is-one-third">
+    <h4 class="subtitle is-5">Basic Statistics</h4>
+    <ul>
+      <li><strong>34,641 / 3,598 / 9,674</strong> annotated utterances for <strong>train / val / test</strong> (InG).</li>
+      <li><strong>16</strong> communicative function types (top: Emphasis ≈21.7%, Deixis ≈20.1%).</li>
+      <li>Source BEAT-2: <strong>~60 hours</strong>, <strong>25 speakers</strong>, <strong>1,762</strong> sequences (avg ≈65.7 s).</li>
+      <li>Human preference/validation study: inter-rater agreement <strong>κ ≈ 0.76</strong> on a balanced subset.</li>
+    </ul>
+  </div>
+</div>
+
+<div class="content">
+  <h4 class="subtitle is-5">Data Processing Pipeline</h4>
+  <p>
+    We segment videos into utterances and extract SMPL-based 3D motion. Within each utterance, motion trajectories are smoothed and
+    segmented by direction/amplitude to form <strong>rule-based movement descriptors</strong>, anchored by <strong>keyframes</strong>.
+    These motion cues, together with transcripts, feed a <strong>VLM prompting pipeline</strong> that produces communicative
+    function labels and intention summaries. A <strong>human-in-the-loop</strong> stage filters candidates and finalizes annotations.
+  </p>
+
+  <h4 class="subtitle is-5">Audio Separation and Alignment</h4>
+  <p>
+    Speech is transcribed and <strong>aligned to the audio timeline</strong> so that transcript tokens provide temporally grounded
+    queries for gesture understanding. Each clip bundles <strong>time-aligned transcripts</strong>, <strong>audio features</strong>,
+    and <strong>3D motion</strong> with finalized <strong>intention &amp; function labels</strong>, enabling models to condition on
+    rhythmic audio cues and explicit communicative semantics.
+  </p>
+
+  <h4 class="subtitle is-5">VLM Prompting Steps</h4>
+  <ol>
+    <li>
+      <strong>Input Assembly</strong>
+      <ul>
+        <li>Inputs: transcript snippet, utterance timestamps, motion keyframes, and rule-based movement descriptors.</li>
+        <li>Goal: provide the VLM with synchronized <em>text + motion evidence</em> for the current utterance window.</li>
+      </ul>
+    </li>
+    <li>
+      <strong>Step 1 — Motion Analysis</strong>
+      <ul>
+        <li>The VLM describes salient body/hand movements (direction, extent, rhythm) grounded to provided keyframes/descriptors.</li>
+        <li>Output: structured motion summary (e.g., “right hand lifts outward; periodic wrist oscillation synced to stressed words”).</li>
+      </ul>
+    </li>
+    <li>
+      <strong>Step 2 — Communicative Function Derivation</strong>
+      <ul>
+        <li>From the motion summary + transcript context, the VLM selects one or more <em>communicative functions</em>
+          (e.g., Emphasis, Deixis, Contrast, Negation) with brief rationales.</li>
+        <li>Output: function labels with confidence and justification.</li>
+      </ul>
+    </li>
+    <li>
+      <strong>Step 3 — Gesture Behavior Mapping</strong>
+      <ul>
+        <li>The VLM maps functions to prototypical gesture behaviors (e.g., “pointing toward referent” for Deixis), aligned to timestamps.</li>
+        <li>Output: behavior slots (phase onsets/offsets) and coarse spatial descriptors linked to the utterance timeline.</li>
+      </ul>
+    </li>
+    <li>
+      <strong>Step 4 — Intention Inference</strong>
+      <ul>
+        <li>The VLM produces a concise <em>intention summary</em> that explains what the speaker aims to convey nonverbally.</li>
+        <li>Output: 1–2 sentence intention text designed to condition downstream encoders/tokenizers.</li>
+      </ul>
+    </li>
+    <li>
+      <strong>Candidate Generation &amp; Human Filtering</strong>
+      <ul>
+        <li>For each utterance, the VLM generates up to <strong>5</strong> candidates (diverse sampling); annotators review and select the best.</li>
+        <li>Quality checks: label consistency, timestamp alignment, and motion–text agreement; disagreements are resolved via majority vote.</li>
+      </ul>
+    </li>
+    <li>
+      <strong>Packaging</strong>
+      <ul>
+        <li>Final artifacts per utterance: transcript, audio timestamps, SMPL motion, <em>function labels</em>, and <em>intention summary</em>
+          with provenance (prompt version, model ID, and human reviewer ID).</li>
+      </ul>
+    </li>
+  </ol>
+</div>
+
+
+      <div class="content">
+        <h4 class="subtitle is-5">Annotation Visualization</h4>
+        <p>Two example clips demonstrating annotated motion analysis using rule-based movement descriptors and vlm prompting for the intention inference.</p>
+        <div class="columns is-centered">
+          <div class="column is-half has-text-centered">
+            <h6 class="subtitle is-6 has-text-grey">Annotation Example 1</h6>
+            <video controls class="video" style="width: 100%; height: 300px;">
+              <source src="./static/videos/annotations/pyrender_window_210_with_audio.mp4" type="video/mp4">
+              Your browser does not support the video tag.
+            </video>
+
+            <details class="mt-3">
+              <summary class="has-text-grey">Annotation (JSON)</summary>
+              <pre style="text-align:left; white-space:pre; font-family:monospace;">
+            {
+              "motion_analysis": {
+                "head": "Neutral input; no observed head shake or nod reported.",
+                "hands_fingers": "No finger articulation available. Two hands are moving inward indicating a closed posture.",
+                "arms_shoulders": "Both arms are moving inward indicating a closed posture.",
+                "legs_feet": "Stable stance assumed; no stepping or weight shift described.",
+                "torso_whole_body": "Upright/neutral posture; emphasis is carried by phrasing rather than observed body movement."
+              },
+              "function_derivation": [
+                "Evaluation (negative): \"not very good\" expresses a negative assessment of community services.",
+                "Emphasis: The phrase \"not very\" intensifies the negative judgment.",
+                "Topic Framing: \"the community services\" establishes the evaluated entity."
+              ],
+              "gesture_behavior_mapping": [
+                "Evaluation (negative) \u2192 A closed posture or reduced amplitude beats would align with negative appraisal.",
+                "Emphasis \u2192 Minimal beat accents could coincide with the stressed phrase \"not very good\".",
+                "Topic Framing \u2192 No deictic mapping asserted without visual evidence (no pointing/reference gesture claimed)."
+              ],
+              "inferred_intention": {
+                "motion_based": "Insufficient motion evidence provided; the person is in a closed posture or reduced amplitude beats for their hand movements with negative appraisal.",
+                "summary": "Convey dissatisfaction with community services; the linguistic construction signals a clear negative evaluation without asserting unobserved gestures."
+              }
+            }
+              </pre>
+            </details>
+            
+            
+          </div>
+
+          <div class="column is-half has-text-centered">
+            <h6 class="subtitle is-6 has-text-grey">Annotation Example 2</h6>
+            <video controls class="video" style="width: 100%; height: 300px;">
+              <source src="./static/videos/annotations/pyrender_window_292_with_audio.mp4" type="video/mp4">
+              Your browser does not support the video tag.
+            </video>
+            
+            <details class="mt-3">
+              <summary class="has-text-grey">Annotation (JSON)</summary>
+              <pre style="text-align:left; white-space:pre; font-family:monospace;">
+            {
+              "motion_analysis": {
+                "head": "Brief forward nod on \"dangerous\"; otherwise steady orientation.",
+                "hands_fingers": "Right hand open-palm with relaxed fingers; small outward sweep during \"more often than not\"; left hand neutral.",
+                "arms_shoulders": "Right arm performs a short lateral sweep at mid-torso height; shoulders relaxed.",
+                "legs_feet": "Stable stance; no visible stepping or weight shift beyond slight forward bias.",
+                "torso_whole_body": "Upright posture with a subtle forward lean on the stressed word \"dangerous\"."
+              },
+              "function_derivation": [
+                "Emphasis: Stress on \"dangerous\" coincides with nod/lean.",
+                "Generalization/Frequency: \"more often than not\" paired with a broadening hand sweep."
+              ],
+              "gesture_behavior_mapping": [
+                "Emphasis → Head nod and slight forward lean timed with \"dangerous\".",
+                "Generalization/Frequency → Open-palm outward sweep aligning with \"more often than not\"."
+              ],
+              "inferred_intention": {
+                "motion_based": "Gestures highlight severity (nod/lean) and breadth/frequency (open-palm sweep) in lockstep with the spoken phrasing.",
+                "summary": "Underline that such situations occur frequently and carry risk; gestures emphasize seriousness and scope."
+              }
+            }
+              </pre>
+            </details>
+            
+
+          </div>
+        </div>
+      </div>
+
+      <h4 class="subtitle is-5">Example Annotation Format</h4>
+      <p>
+        The format of a metadata JSON file is shown below (example from <code>2_scott_0_24_24.json</code>):
+      </p>
+      <pre style="background-color: #f5f5f5; padding: 15px; border-radius: 5px; overflow-x: auto; max-height: 400px;"><code>{
+  "test_case": "2_scott_0_24_24.TextGrid",
+  "sequences": [
+    {
+      "sequence_timing": {
+        "start_time": 1.7,
+        "end_time": 4.01,
+        "duration": 2.31
+      },
+      "sentence": "there is one food that is quite tasty",
+      "word_timings": [
+        {
+          "word": "there",
+          "start_time": 1.7,
+          "end_time": 1.9,
+          "frame_index": 27,
+          "image_path": "BEAT_V2/beat_v2.0.0/smplx_render/english/2_scott_0_24_24/frame_27.png"
+        },
+        {
+          "word": "is",
+          "start_time": 1.9,
+          "end_time": 2.01,
+          "frame_index": 29,
+          "image_path": "BEAT_V2/beat_v2.0.0/smplx_render/english/2_scott_0_24_24/frame_29.png"
+        }
+      ],
+      "motion_analysis": {
+        "head": "Slight forward tilt as the speaker emphasizes \"tasty,\" indicating engagement and interest.",
+        "hands_fingers": "Right hand held in front, fingers extended and slightly bent, conveying indication/description.",
+        "arms_shoulders": "Right arm slightly raised at shoulder height; left arm relaxed.",
+        "legs_feet": "Weight evenly distributed with a slight forward lean.",
+        "torso_whole_body": "Upper body leans slightly forward; posture is open and engaged."
+      },
+      "function_derivation": [
+        "Deixis: \"There\" indicates a reference to something specific.",
+        "Quantification: \"One\" suggests a singular item within a larger set."
+      ],
+      "gesture_behavior_mapping": [
+        "Deixis → Pointing gesture: Extended hand aligns with indicating a specific item.",
+        "Quantification → Numerical gesture: Hand positioning denotes singularity (one)."
+      ],
+      "inferred_intention": {
+        "motion_based": "Gestures draw attention to a specific item; forward lean and arm positioning show engagement.",
+        "summary": "Highlight a particular food item and its appeal, inviting anticipatory engagement."
+      }
+    }
+  ]
+}</code></pre>
+  </div>
+  
+  
+      
+  
+  </div>
+
+</section>
+</section>
+
+<section class="section" id="BibTeX">
+  <div class="container is-max-desktop content">
+    <h2 class="title">BibTeX</h2>
+    <pre><code></code>
+      Intentional Gesture, 2025
+    </code></pre>
+  </div>
+</section>
+
+<footer class="footer" style="padding-top: 6px; padding-bottom: 6px;">
+  <div class="container">
+    <div class="content has-text-centered">
+    </div>
+    <div class="columns is-centered">
+      <div class="column is-8">
+        <div class="content">
+          <p>
+            Our website template is a modified version of <a
+              href="https://github.com/nerfies/nerfies.github.io">Nerfies</a>. Thanks to the authors' contribution.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+
+
+
+</body>
+</html>
